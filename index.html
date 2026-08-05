@@ -1,0 +1,1953 @@
+<!DOCTYPE html>
+<html lang="uz" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Biosteenyc — Ilm-fan va Ijodkorlik uygʻunligi</title>
+  <meta name="description" content="Biosteenyc - Abdulhakim Xayitboyevning shaxsiy portfoliosi. Dasturlash, mobil ilovalar, UstaMakon va shoirlik ijodi." />
+  <meta name="keywords" content="biosteenyc, abdulhakim, ustamakon, abdulhakim_sherlari, sherlar, dasturlash, flutter, mobil" />
+  <meta name="author" content="Abdulhakim Xayitboyev (Biosteenyc)" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome Icons CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- Three.js (3D Book Engine) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- GSAP (Smooth Animations) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <!-- PDF.js (Real PDF Viewer) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            m3: {
+              primary: '#00696f',
+              onPrimary: '#ffffff',
+              primaryContainer: '#9cf0f8',
+              onPrimaryContainer: '#002022',
+              surface: '#0f172a',
+              onSurface: '#e2e8f0',
+              surfaceVariant: '#1e293b',
+              onSurfaceVariant: '#94a3b8',
+              surfaceContainerHigh: '#334155',
+              outline: '#475569',
+              lightSurface: '#f8fafc',
+              lightOnSurface: '#0f172a',
+              lightSurfaceVariant: '#f1f5f9',
+              lightOnSurfaceVariant: '#475569',
+              lightPrimary: '#00696f',
+              lightPrimaryContainer: '#cbf5f9'
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['"Playfair Display"', 'serif'],
+            arabic: ['"Noto Naskh Arabic"', 'serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbar & Material M3 Styles */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #475569; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #00696f; }
+
+    .m3-card {
+      transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.3s cubic-bezier(0.2, 0, 0, 1);
+    }
+    .m3-card:hover {
+      transform: translateY(-4px);
+    }
+    
+    .tab-pill {
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    [dir="rtl"] {
+      font-family: 'Noto Naskh Arabic', 'Plus Jakarta Sans', serif;
+    }
+  </style>
+</head>
+<body class="bg-m3-lightSurface dark:bg-m3-surface text-m3-lightOnSurface dark:text-m3-onSurface min-h-screen flex flex-col font-sans transition-colors duration-300">
+
+  <!-- TOP HEADER & CONTROLS -->
+  <header class="sticky top-0 z-40 backdrop-blur-md bg-m3-lightSurface/80 dark:bg-m3-surface/80 border-b border-gray-200 dark:border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      
+      <!-- Brand Logo -->
+      <a href="#/" class="flex items-center gap-2 group">
+        <div class="w-10 h-10 rounded-2xl bg-m3-primary flex items-center justify-center text-white font-bold text-xl shadow-lg group-hover:scale-105 transition-transform">
+          B
+        </div>
+        <div class="flex flex-col">
+          <span class="font-extrabold tracking-wide text-lg text-m3-primary dark:text-m3-primaryContainer">Biosteenyc</span>
+          <span class="text-[10px] text-gray-500 dark:text-slate-400 font-medium -mt-1">[ Bay Oves Tiy Nak ]</span>
+        </div>
+      </a>
+
+      <!-- Language & Theme Switchers -->
+      <div class="flex items-center gap-3">
+        
+        <!-- Language Select Dropdown -->
+        <div class="relative">
+          <select id="lang-select" onchange="changeLanguage(this.value)" class="appearance-none bg-m3-lightSurfaceVariant dark:bg-m3-surfaceVariant text-xs font-semibold px-3 py-2 pr-8 rounded-full border border-gray-300 dark:border-slate-700 cursor-pointer focus:outline-none focus:ring-2 focus:ring-m3-primary">
+            <option value="uz_latn">O'zbek (Lotin)</option>
+            <option value="uz_cyrl">Ўзбек (Кирилл)</option>
+            <option value="uz_afg">افغان أوزبيك (RTL)</option>
+            <option value="tg_cyrl">Тоҷикӣ</option>
+            <option value="ky_cyrl">Кыргызча</option>
+          </select>
+          <i class="fa-solid fa-chevron-down absolute right-2.5 top-1/2 -translate-y-1/2 text-xs opacity-60 pointer-events-none"></i>
+        </div>
+
+        <!-- Theme Toggle Button -->
+        <button onclick="toggleTheme()" class="w-10 h-10 rounded-full bg-m3-lightSurfaceVariant dark:bg-m3-surfaceVariant flex items-center justify-center text-gray-700 dark:text-yellow-400 hover:opacity-80 transition-opacity">
+          <i id="theme-icon" class="fa-solid fa-moon"></i>
+        </button>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- SEGMENTED NAVIGATION SWITCH (M3 Toggle Switch) -->
+  <nav class="sticky top-16 z-30 py-4 backdrop-blur-md bg-m3-lightSurface/90 dark:bg-m3-surface/90">
+    <div class="max-w-md mx-auto px-4">
+      <div class="bg-gray-200 dark:bg-slate-800/80 p-1.5 rounded-full flex items-center justify-between shadow-inner relative">
+        <button onclick="navigateTo('#/ijod')" id="tab-ijod" class="tab-pill flex-1 py-2 rounded-full text-xs font-bold text-center z-10 text-gray-600 dark:text-slate-400">
+          <i class="fa-solid fa-feather mr-1.5"></i><span data-i18n="nav_ijod">Ijod</span>
+        </button>
+        <button onclick="navigateTo('#/')" id="tab-asosiy" class="tab-pill flex-1 py-2 rounded-full text-xs font-bold text-center z-10 bg-m3-primary text-white shadow-md">
+          <i class="fa-solid fa-house mr-1.5"></i><span data-i18n="nav_asosiy">Asosiy</span>
+        </button>
+        <button onclick="navigateTo('#/ilm')" id="tab-ilm" class="tab-pill flex-1 py-2 rounded-full text-xs font-bold text-center z-10 text-gray-600 dark:text-slate-400">
+          <i class="fa-solid fa-flask mr-1.5"></i><span data-i18n="nav_ilm">Ilm</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN SPA CONTENT PAGES -->
+  <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    
+    <!-- 1. ASOSIY (HOME) SAHIFA -->
+    <section id="page-asosiy" class="space-y-8 animate-fadeIn">
+      
+      <!-- Hero Card -->
+      <div class="m3-card bg-white dark:bg-slate-800/60 border border-gray-200 dark:border-slate-700 rounded-3xl p-6 sm:p-10 shadow-xl text-center flex flex-col items-center">
+        <div class="relative mb-6">
+          <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-full overflow-hidden ring-4 ring-m3-primary/30 shadow-2xl">
+            <img src="https://placehold.co/400x400/00696f/ffffff?text=Abdulhakim" alt="Abdulhakim Xayitboyev" class="w-full h-full object-cover" />
+          </div>
+          <span class="absolute bottom-1 right-1 bg-emerald-500 text-white p-2 rounded-full text-xs shadow" title="Faol dasturchi">
+            <i class="fa-solid fa-code"></i>
+          </span>
+        </div>
+
+        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-m3-primary dark:text-m3-primaryContainer mb-2">
+          Biosteenyc
+        </h1>
+        <p class="text-lg sm:text-2xl font-serif italic text-teal-700 dark:text-teal-300 mb-4" data-i18n="hero_subtitle">
+          Ilm-fan va Ijodkorlik uygʻunligi
+        </p>
+
+        <!-- Tags -->
+        <div class="flex flex-wrap justify-center gap-2 mb-6">
+          <span class="px-3 py-1 bg-teal-100 dark:bg-teal-950/80 text-teal-800 dark:text-teal-300 rounded-full text-xs font-semibold">#biosteenyc</span>
+          <span class="px-3 py-1 bg-teal-100 dark:bg-teal-950/80 text-teal-800 dark:text-teal-300 rounded-full text-xs font-semibold">#abdulhakim</span>
+          <span class="px-3 py-1 bg-teal-100 dark:bg-teal-950/80 text-teal-800 dark:text-teal-300 rounded-full text-xs font-semibold">#ustamakon</span>
+          <span class="px-3 py-1 bg-teal-100 dark:bg-teal-950/80 text-teal-800 dark:text-teal-300 rounded-full text-xs font-semibold">#abdulhakim_sherlari</span>
+          <span class="px-3 py-1 bg-teal-100 dark:bg-teal-950/80 text-teal-800 dark:text-teal-300 rounded-full text-xs font-semibold">#sherlar</span>
+          <span class="px-3 py-1 bg-teal-100 dark:bg-teal-950/80 text-teal-800 dark:text-teal-300 rounded-full text-xs font-semibold">#dasturlash</span>
+          <span class="px-3 py-1 bg-teal-100 dark:bg-teal-950/80 text-teal-800 dark:text-teal-300 rounded-full text-xs font-semibold">#flutter</span>
+          <span class="px-3 py-1 bg-teal-100 dark:bg-teal-950/80 text-teal-800 dark:text-teal-300 rounded-full text-xs font-semibold">#mobil</span>
+        </div>
+
+        <!-- Bio Paragraph -->
+        <p class="max-w-2xl text-gray-700 dark:text-slate-300 text-base sm:text-lg leading-relaxed mb-6" data-i18n="hero_desc">
+          Biosteenyc - bu Fargʻonalik dasturchi va havaskor shoir Abdulhakim Xayitboyevning raqamli brendi va tahallusi. Boʻstonlik yigit maʻnosini anglatadi. Toʻgʻri talaffuz: [ Bay Oves Tiy Nak ].
+        </p>
+
+        <!-- Badge -->
+        <div class="bg-gray-100 dark:bg-slate-700/60 text-xs sm:text-sm font-semibold px-4 py-2 rounded-2xl text-gray-600 dark:text-slate-300 mb-8 border border-gray-200 dark:border-slate-600" data-i18n="hero_birth">
+          [Abdulhakim - 2004 yil, Fargʻona, Qoʻshtepa, Boʻston]
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex flex-wrap justify-center gap-4">
+          <a href="https://github.com/biosteenyc" target="_blank" rel="noopener" class="px-5 py-3 rounded-2xl bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 font-semibold text-sm flex items-center gap-2 hover:opacity-90 transition-opacity">
+            <i class="fa-brands fa-github text-lg"></i> GitHub
+          </a>
+          <a href="https://youtube.com/@biosteenyc" target="_blank" rel="noopener" class="px-5 py-3 rounded-2xl bg-red-600 text-white font-semibold text-sm flex items-center gap-2 hover:bg-red-700 transition-colors">
+            <i class="fa-brands fa-youtube text-lg"></i> YouTube
+          </a>
+          <button onclick="downloadCV()" class="px-5 py-3 rounded-2xl bg-m3-primary text-white font-semibold text-sm flex items-center gap-2 hover:bg-teal-700 transition-colors">
+            <i class="fa-solid fa-file-arrow-down text-lg"></i> <span data-i18n="btn_cv">CV Yuklash</span>
+          </button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- 2. IJOD OYNASI (Poetry & 3D WebGL Book) -->
+    <section id="page-ijod" class="hidden space-y-6">
+      
+      <!-- YouTube Banner -->
+      <div class="m3-card bg-gradient-to-r from-red-600 to-rose-700 text-white rounded-3xl p-6 shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-4 text-center sm:text-left">
+          <div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center text-2xl flex-shrink-0">
+            <i class="fa-brands fa-youtube"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-xl" data-i18n="yt_title">YouTube kanalga aʻzo boʻling</h3>
+            <p class="text-xs text-rose-100" data-i18n="yt_sub">Abdulhakim Sheʻrlari va Dasturlash darslari</p>
+          </div>
+        </div>
+        <a href="https://youtube.com/@biosteenyc" target="_blank" rel="noopener" class="px-6 py-3 bg-white text-red-600 font-bold rounded-2xl text-sm hover:bg-rose-50 transition-colors flex-shrink-0">
+          <span data-i18n="yt_btn">A'zo bo'lish</span>
+        </a>
+      </div>
+
+      <!-- Title & Category Filters -->
+      <div class="text-center space-y-2">
+        <h2 class="text-2xl sm:text-4xl font-serif font-bold text-m3-primary dark:text-m3-primaryContainer">
+          Abdulhakim Sheʻrlari. Biosteenyc
+        </h2>
+        <p class="text-xs sm:text-sm text-gray-500 dark:text-slate-400" data-i18n="book_hint">
+          (Sichqoncha yoki barmoq bilan kitobni 3D aylantiring hamda sahifalarni varoqlang)
+        </p>
+
+        <!-- Category Pills -->
+        <div class="flex flex-wrap justify-center gap-2 pt-2" id="poetry-categories">
+          <button onclick="changePoetryCategory('all', this)" class="cat-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-m3-primary text-white">
+            <span data-i18n="cat_all">Barchasi</span>
+          </button>
+          <button onclick="changePoetryCategory('classic', this)" class="cat-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-m3-lightSurfaceVariant dark:bg-m3-surfaceVariant text-gray-700 dark:text-slate-300">
+            <span data-i18n="cat_classic_sherlar">Klassika</span>
+          </button>
+          <button onclick="changePoetryCategory('hayotiy', this)" class="cat-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-m3-lightSurfaceVariant dark:bg-m3-surfaceVariant text-gray-700 dark:text-slate-300">
+            <span data-i18n="cat_hayotiy">Hayotiy</span>
+          </button>
+          <button onclick="changePoetryCategory('muhabbat', this)" class="cat-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-m3-lightSurfaceVariant dark:bg-m3-surfaceVariant text-gray-700 dark:text-slate-300">
+            <span data-i18n="cat_muhabbat">Muhabbat</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 3D WEBGL BOOK CONTAINER -->
+      <div class="relative bg-slate-900/90 rounded-3xl p-2 sm:p-6 border border-slate-700 shadow-2xl overflow-hidden min-h-[520px] flex flex-col items-center justify-center">
+        
+        <div id="book-canvas-container" class="w-full h-[480px] sm:h-[520px] cursor-grab active:cursor-grabbing"></div>
+
+        <!-- Controls Overlay -->
+        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-4 bg-slate-800/90 backdrop-blur-md px-6 py-2.5 rounded-full border border-slate-700 text-white text-sm shadow-xl">
+          <button onclick="prevBookPage()" class="hover:text-teal-400 p-1" title="Oldingi bet">
+            <i class="fa-solid fa-chevron-left text-lg"></i>
+          </button>
+          <span id="book-page-num" class="font-bold min-w-[100px] text-center text-xs">Bet: 1 / 4</span>
+          <button onclick="nextBookPage()" class="hover:text-teal-400 p-1" title="Keyingi bet">
+            <i class="fa-solid fa-chevron-right text-lg"></i>
+          </button>
+          <div class="w-px h-4 bg-slate-600 mx-1"></div>
+          <button onclick="toggle3DRotation()" class="hover:text-teal-400 p-1" title="3D Avto-aylantirish">
+            <i class="fa-solid fa-rotate text-base"></i>
+          </button>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- 3. ILM OYNASI (Projects & Practice) -->
+    <section id="page-ilm" class="hidden space-y-10">
+      
+      <!-- Section Title -->
+      <div class="border-b border-gray-200 dark:border-slate-800 pb-4">
+        <h2 class="text-3xl font-extrabold text-m3-primary dark:text-m3-primaryContainer" data-i18n="ilm_title">
+          Loyihalar va Amaliyot boʻlimi
+        </h2>
+        <p class="text-sm text-gray-500 dark:text-slate-400" data-i18n="ilm_sub">
+          Dasturlash hamda tizimli optimizatsiya loyihalari
+        </p>
+      </div>
+
+      <!-- USTAMAKON PROJECT SHOWCASE -->
+      <div class="m3-card bg-white dark:bg-slate-800/80 border border-gray-200 dark:border-slate-700 rounded-3xl p-6 sm:p-8 shadow-xl space-y-6">
+        
+        <div class="flex items-center gap-4">
+          <div class="w-16 h-16 rounded-2xl bg-teal-600 text-white flex items-center justify-center text-3xl font-bold shadow-lg">
+            UM
+          </div>
+          <div>
+            <h3 class="text-2xl font-bold text-gray-900 dark:text-white">UstaMakon</h3>
+            <p class="text-xs text-teal-600 dark:text-teal-400 font-semibold" data-i18n="um_badge">Tizim optimizatsiyasi va diagnostikasi</p>
+          </div>
+        </div>
+
+        <p class="text-gray-700 dark:text-slate-300 leading-relaxed text-sm sm:text-base" data-i18n="um_desc">
+          Ustamakon - mobil ilovadan turib desktop ilovaga soʻrov yuborish orqali bir bosishda tizim muammolari keshlar tozalashlar hullas optimizatsiya va diagnostikaga qiladigan ilova. Ilovani ishlatish uchun Desktop va Mobil versiyani oʻrnatib olishinggiz kerak.
+        </p>
+
+        <!-- Instructions Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+          
+          <!-- Mobile Guide -->
+          <div class="bg-gray-50 dark:bg-slate-900/60 p-5 rounded-2xl border border-gray-200 dark:border-slate-700 space-y-3">
+            <h4 class="font-bold text-m3-primary dark:text-m3-primaryContainer flex items-center gap-2">
+              <i class="fa-solid fa-mobile-screen-button"></i> <span data-i18n="um_mob_title">Mobil versiyada</span>
+            </h4>
+            <ol class="list-decimal list-inside text-xs sm:text-sm text-gray-700 dark:text-slate-300 space-y-1.5 leading-relaxed">
+              <li data-i18n="um_m1">Google Play Marketdan yuklab oling.</li>
+              <li data-i18n="um_m2">Tilni tanlang</li>
+              <li data-i18n="um_m3">QR kod skanerlash tugmasini bosing</li>
+              <li data-i18n="um_m4">Kompyuterdagi desktop ilovada chiqqan QR kodni skanerlang ulanadi</li>
+              <li data-i18n="um_m5">Xizmatlar oynasidan xizmatni topib pultga yuklash tugmasini bosing.</li>
+              <li data-i18n="um_m6">Ishga tushirish tugmasini bosing tamom.</li>
+            </ol>
+          </div>
+
+          <!-- Desktop Guide -->
+          <div class="bg-gray-50 dark:bg-slate-900/60 p-5 rounded-2xl border border-gray-200 dark:border-slate-700 space-y-3">
+            <h4 class="font-bold text-m3-primary dark:text-m3-primaryContainer flex items-center gap-2">
+              <i class="fa-solid fa-desktop"></i> <span data-i18n="um_desk_title">Desktop versiyada</span>
+            </h4>
+            
+            <!-- Windows sub-guide -->
+            <div class="space-y-1 text-xs text-gray-700 dark:text-slate-300">
+              <p class="font-semibold text-teal-700 dark:text-teal-400">Windows:</p>
+              <ul class="list-disc list-inside space-y-1 pl-1">
+                <li data-i18n="um_w1">Windows tugmasini bosib UstaMakon.zip faylni yuklang.</li>
+                <li data-i18n="um_w2">Zipdan chiqaring va UstaMakon.exe faylga bosing.</li>
+                <li data-i18n="um_w3">Smart Screen bloklasa: "More info" -> "Run anyway" bosing.</li>
+              </ul>
+            </div>
+
+            <!-- Warning Callout -->
+            <div class="bg-amber-500/10 border-l-4 border-amber-500 p-2.5 rounded text-[11px] text-amber-800 dark:text-amber-300 leading-snug" data-i18n="um_warning">
+              [ILOVANI ZARARLI TOMONI YOʻQ, VIRUS EMAS. SHUNCHAKI PULLIK MICROSOFT HISOBIM YOʻQLIGI UCHUN SERTIFIKATLAY OLMADIM. SMART SCREEN SERTIFIKATI YOʻQ BEMALOL ISHLATAVERING].
+            </div>
+
+            <!-- Linux sub-guide -->
+            <div class="space-y-1 text-xs text-gray-700 dark:text-slate-300 pt-1">
+              <p class="font-semibold text-teal-700 dark:text-teal-400">Linux:</p>
+              <p class="font-mono bg-gray-200 dark:bg-slate-800 p-1 rounded text-[11px] overflow-x-auto">cd; cd Downloads; chmod +x UstaMakon.AppImage</p>
+              <p text-xs data-i18n="um_l1">yoki Xususiyatlardan "Dastur Sifatida ishlatish"ni yoqing.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Downloads & Video Link Buttons -->
+        <div class="flex flex-wrap items-center gap-3 pt-4 border-t border-gray-200 dark:border-slate-700">
+          <a href="https://github.com/biosteenyc" target="_blank" class="px-4 py-2.5 rounded-xl bg-blue-600 text-white font-semibold text-xs sm:text-sm flex items-center gap-2 hover:bg-blue-700">
+            <i class="fa-brands fa-windows text-base"></i> Windows (.zip)
+          </a>
+          <a href="https://github.com/biosteenyc" target="_blank" class="px-4 py-2.5 rounded-xl bg-orange-600 text-white font-semibold text-xs sm:text-sm flex items-center gap-2 hover:bg-orange-700">
+            <i class="fa-brands fa-linux text-base"></i> Linux (.AppImage)
+          </a>
+          <a href="https://play.google.com/store/apps/details?id=uz.biosteenyc.kompyuter.kompyuter_sirlari" target="_blank" class="px-4 py-2.5 rounded-xl bg-emerald-600 text-white font-semibold text-xs sm:text-sm flex items-center gap-2 hover:bg-emerald-700">
+            <i class="fa-brands fa-google-play text-base"></i> Google Play
+          </a>
+          <a href="https://youtube.com/@biosteenyc" target="_blank" class="px-4 py-2.5 rounded-xl border border-red-600 text-red-600 dark:text-red-400 font-semibold text-xs sm:text-sm flex items-center gap-2 hover:bg-red-50 dark:hover:bg-red-950/40">
+            <i class="fa-brands fa-youtube text-base"></i> <span data-i18n="btn_video">Video Ko'rsatma</span>
+          </a>
+        </div>
+
+      </div>
+
+      <!-- AMALIYOT SECTION (Interactive PDF Presentations) -->
+      <div class="space-y-6">
+        <h3 class="text-2xl font-bold text-gray-900 dark:text-white" data-i18n="amaliyot_title">
+          Amaliyot boʻlimi
+        </h3>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          <!-- Amaliyot 2025 -->
+          <div class="m3-card bg-white dark:bg-slate-800/80 border border-gray-200 dark:border-slate-700 rounded-3xl p-6 shadow-lg flex flex-col justify-between space-y-4">
+            <div>
+              <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 text-indigo-500 flex items-center justify-center text-xl font-bold mb-3">
+                <i class="fa-solid fa-file-pdf"></i>
+              </div>
+              <h4 class="text-xl font-bold text-gray-900 dark:text-white mb-1">Amaliyot 2025</h4>
+              <p class="text-xs text-gray-500 dark:text-slate-400" data-i18n="am_2025_desc">
+                2025-yilgi amaliyot taqdimoti va hisoboti. PDF ko'rish imkoniyati bilan.
+              </p>
+            </div>
+            <button onclick="openPDFViewer('Amaliyot 2025', 'https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf')" class="w-full py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 shadow">
+              <i class="fa-solid fa-expand"></i> <span data-i18n="btn_open_pdf">Taqdimotni Ochish</span>
+            </button>
+          </div>
+
+          <!-- Amaliyot 2026 -->
+          <div class="m3-card bg-white dark:bg-slate-800/80 border border-gray-200 dark:border-slate-700 rounded-3xl p-6 shadow-lg flex flex-col justify-between space-y-4">
+            <div>
+              <div class="w-12 h-12 rounded-2xl bg-teal-500/10 text-teal-500 flex items-center justify-center text-xl font-bold mb-3">
+                <i class="fa-solid fa-file-pdf"></i>
+              </div>
+              <h4 class="text-xl font-bold text-gray-900 dark:text-white mb-1">Amaliyot 2026</h4>
+              <p class="text-xs text-gray-500 dark:text-slate-400" data-i18n="am_2026_desc">
+                2026-yilgi amaliyot loyihalari taqdimoti. PDF slide formatida.
+              </p>
+            </div>
+            <button onclick="openPDFViewer('Amaliyot 2026', 'https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf')" class="w-full py-3 rounded-2xl bg-m3-primary hover:bg-teal-700 text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 shadow">
+              <i class="fa-solid fa-expand"></i> <span data-i18n="btn_open_pdf">Taqdimotni Ochish</span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- REAL PDF.JS PRESENTATION MODAL -->
+  <div id="pdf-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex-col items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-700 rounded-3xl w-full max-w-4xl max-h-[90vh] flex flex-col overflow-hidden shadow-2xl">
+      
+      <!-- Modal Header -->
+      <div class="p-4 border-b border-slate-800 flex items-center justify-between text-white">
+        <h3 id="pdf-modal-title" class="font-bold text-lg">Taqdimot Viewer</h3>
+        <button onclick="closePDFViewer()" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 flex items-center justify-center">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Canvas Viewer Body -->
+      <div class="flex-1 overflow-auto p-4 flex items-center justify-center bg-slate-950">
+        <canvas id="pdf-render-canvas" class="max-w-full h-auto rounded-xl shadow-lg border border-slate-800"></canvas>
+      </div>
+
+      <!-- Presentation Footer Controls -->
+      <div class="p-4 border-t border-slate-800 flex items-center justify-between text-white text-sm bg-slate-900">
+        <button onclick="prevPDFPage()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 font-semibold flex items-center gap-2">
+          <i class="fa-solid fa-arrow-left"></i> Oldingi
+        </button>
+        <span id="pdf-page-num" class="font-mono text-xs">Sahifa: 1 / 1</span>
+        <button onclick="nextPDFPage()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 font-semibold flex items-center gap-2">
+          Keyingi <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="mt-auto border-t border-gray-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 py-6 text-center text-xs text-gray-500 dark:text-slate-400 space-y-2">
+    <p class="font-semibold text-gray-700 dark:text-slate-300">Biosteenyc 2016 - 2026</p>
+    <p class="flex flex-wrap justify-center items-center gap-4">
+      <span><i class="fa-solid fa-phone text-m3-primary"></i> Telefon: +998 - (33) - 349 - 09 - 30</span>
+      <span><i class="fa-brands fa-telegram text-sky-500"></i> Telegram: Biosteenyc</span>
+    </p>
+  </footer>
+
+  <!-- Toast Message Box -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-5 py-3 rounded-2xl shadow-2xl border border-slate-700 text-xs sm:text-sm translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    Toast message
+  </div>
+
+  <!-- JAVASCRIPT LOGIC ENGINE -->
+  <script>
+    
+    // --- 1. MULTILINGUAL TRANSLATION DICTIONARY (5 Languages) ---
+    const translations = {
+      uz_latn: {
+        nav_ijod: "Ijod", nav_asosiy: "Asosiy", nav_ilm: "Ilm",
+        hero_subtitle: "Ilm-fan va Ijodkorlik uygʻunligi",
+        hero_desc: "Biosteenyc - bu Fargʻonalik dasturchi va havaskor shoir Abdulhakim Xayitboyevning raqamli brendi va tahallusi. Boʻstonlik yigit maʻnosini anglatadi. Toʻgʻri talaffuz: [ Bay Oves Tiy Nak ].",
+        hero_birth: "[Abdulhakim - 2004 yil, Fargʻona, Qoʻshtepa, Boʻston]",
+        btn_cv: "CV Yuklash",
+        yt_title: "YouTube kanalga aʻzo boʻling",
+        yt_sub: "Abdulhakim Sheʻrlari va Dasturlash darslari",
+        yt_btn: "A'zo bo'lish",
+        book_hint: "(Sichqoncha yoki barmoq bilan kitobni 3D aylantiring hamda sahifalarni varoqlang)",
+        cat_all: "Barchasi", cat_classic_sherlar: "Klassika", cat_hayotiy: "hayotiy", cat_muhabbat: "Muhabbat",
+        ilm_title: "Loyihalar va Amaliyot boʻlimi",
+        ilm_sub: "Dasturlash hamda tizimli optimizatsiya loyihalari",
+        um_badge: "Tizim optimizatsiyasi va diagnostikasi",
+        um_desc: "Ustamakon - mobil ilovadan turib desktop ilovaga soʻrov yuborish orqali bir bosishda tizim muammolari keshlar tozalashlar hullas optimizatsiya va diagnostikaga qiladigan ilova.",
+        um_mob_title: "Mobil versiyada",
+        um_m1: "Google Play Marketdan yuklab oling.",
+        um_m2: "Tilni tanlang",
+        um_m3: "QR kod skanerlash tugmasini bosing",
+        um_m4: "Kompyuterdagi desktop ilovada chiqqan QR kodni skanerlang ulanadi",
+        um_m5: "Xizmatlar oynasidan xizmatni topib pultga yuklash tugmasini bosing.",
+        um_m6: "Ishga tushirish tugmasini bosing tamom.",
+        um_desk_title: "Desktop versiyada",
+        um_w1: "Windows tugmasini bosib UstaMakon.zip faylni yuklang.",
+        um_w2: "Zipdan chiqaring va UstaMakon.exe faylga bosing.",
+        um_w3: "Smart Screen bloklasa: 'More info' -> 'Run anyway' bosing.",
+        um_warning: "[ILOVANI ZARARLI TOMONI YOʻQ, VIRUS EMAS. SHUNCHAKI PULLIK MICROSOFT HISOBIM YOʻQLIGI UCHUN SERTIFIKATLAY OLMADIM. SMART SCREEN SERTIFIKATI YOʻQ BEMALOL ISHLATAVERING].",
+        um_l1: "yoki Xususiyatlardan 'Dastur Sifatida ishlatish'ni yoqing.",
+        btn_video: "Video Ko'rsatma",
+        amaliyot_title: "Amaliyot boʻlimi",
+        am_2025_desc: "2025-yilgi amaliyot taqdimoti va hisoboti. PDF ko'rish imkoniyati bilan.",
+        am_2026_desc: "2026-yilgi amaliyot loyihalari taqdimoti. PDF slide formatida.",
+        btn_open_pdf: "Taqdimotni Ochish"
+      },
+      uz_cyrl: {
+        nav_ijod: "Ижод", nav_asosiy: "Асосий", nav_ilm: "Илм",
+        hero_subtitle: "Илм-фан ва Ижодкорлик уйғунлиги",
+        hero_desc: "Biosteenyc - бу Фарғоналик дастурчи ва ҳаваскор шоир Абдулҳаким Хайтбоевнинг рақамли бренди ва таҳаллуси. Бўстонлик йигит маъносини англатади. Тўғри талаффуз: [ Бай Овес Тий Нак ].",
+        hero_birth: "[Абдулҳаким - 2004 йил, Фарғона, Қўштепа, Бўстон]",
+        btn_cv: "CV Юклаш",
+        yt_title: "YouTube каналга аъзо бўлинг",
+        yt_sub: "Абдулҳаким Шеърлари ва Дастурлаш дарсдари",
+        yt_btn: "Аъзо бўлиш",
+        book_hint: "(Сичқонча ёки бармоқ билан китобни 3D айлантиринг ҳамда саҳифаларни вароқланг)",
+        cat_all: "Барчаси", cat_classic_sherlar: "Фалсафий", cat_hayotiy: "Ватан", cat_muhabbat: "Муҳаббат",
+        ilm_title: "Лойиҳалар ва Амалиёт бўлими",
+        ilm_sub: "Дастурлаш ҳамда тизимли оптимизация лойиҳалари",
+        um_badge: "Тизим оптимизацияси ва диагностикаси",
+        um_desc: "Устамакон - мобил иловадан туриб десктоп иловага сўров юбориш орқали бир босишда тизим муаммолари кэшлар тозалашлар хуллас оптимизация қиладиган илова.",
+        um_mob_title: "Мобил версияда",
+        um_m1: "Google Play Marketдан юклаб олинг.",
+        um_m2: "Тилни танланг",
+        um_m3: "QR код сканерлаш тугмасини босинг",
+        um_m4: "Компьютердаги десктоп иловада чиққан QR кодни сканерланг уланади",
+        um_m5: "Хизматлар ойнасидан хизматни топиб пультга юклаш тугмасини босинг.",
+        um_m6: "Ишга тушириш тугмасини босинг тамом.",
+        um_desk_title: "Десктоп версияда",
+        um_w1: "Windows тугмасини босиб UstaMakon.zip файлни юкланг.",
+        um_w2: "Zipдан чиқаринг ва UstaMakon.exe файлга босинг.",
+        um_w3: "Smart Screen блокласа: 'More info' -> 'Run anyway' босинг.",
+        um_warning: "[ИЛОВАНИ ЗАРАРЛИ ТОМОНИ ЁҚ, ВИРУС ЭМАС. ШУНЧАКИ ПУЛЛИК MICROSOFT ҲИСОБИМ ЁҚЛИГИ УЧУН СЕРТИФИКАТЛАЙ ОЛМАДИМ. БЕМАЛОЛ ИШЛАТАВЕРИНГ].",
+        um_l1: "ёки Хусусиятлардан 'Дастур Сифатида ишлатиш'ни ёқинг.",
+        btn_video: "Видео Кўрсатма",
+        amaliyot_title: "Амалиёт бўлими",
+        am_2025_desc: "2025-йилги амалиёт тақдимоти ва ҳисоботи.",
+        am_2026_desc: "2026-йилги амалиёт лойиҳалари тақдимоти.",
+        btn_open_pdf: "Тақдимотни Очиш"
+      },
+      uz_afg: {
+        nav_ijod: "إجاد", nav_asosiy: "أقاسي", nav_ilm: "علم",
+        hero_subtitle: "علم و إجادکارلیک وعگونلیگی",
+        hero_desc: "بیوستینیک - فرغانه‌لیک داستورچی و شاعر عبدالحکیم هایتبایف‌ننگ دیجیتال برندی.",
+        hero_birth: "[عبدالحکیم - 2004 ییل، فرغانه، قوشتیپه، بوستون]",
+        btn_cv: "CV یوکلاش",
+        yt_title: "YouTube کانالیگه اعضا بولینگ",
+        yt_sub: "عبدالحکیم شعرلری",
+        yt_btn: "اعضا بولیش",
+        book_hint: "(کتابنی 3D اینلانتیرینگ)",
+        cat_all: "برچه‌سی", cat_classic_sherlar: "فلسفی", cat_hayotiy: "وطن", cat_muhabbat: "محبت",
+        ilm_title: "علم و پرویژه‌لر بولیمی",
+        ilm_sub: "داستورلاش پرویژه‌لری",
+        um_badge: "سیستم اوپتیمیزاسیوسی",
+        um_desc: "اوستامکان - موبایل ارا سیستم اوپتیمیزاسیوسی پروگراماسی.",
+        um_mob_title: "موبایل نسخه",
+        um_m1: "Google Play‌دن یوکلاڭ.",
+        um_m2: "تیلنی تنلانڭ",
+        um_m3: "QR کد سکانیرلاڭ",
+        um_m4: "کامپیوترده‌گی QR کدنی سکانیرلاڭ",
+        um_m5: "پولتگه یوکلاڭ",
+        um_m6: "باشلاڭ",
+        um_desk_title: "دسکتاپ نسخه",
+        um_w1: "Windows فایلینی یوکلاڭ.",
+        um_w2: "Zip‌دن چیقارینڭ.",
+        um_w3: "Smart Screen: More info -> Run anyway",
+        um_warning: "[ویروس ایمس، سرتیفیکاتسیز باشقاریله‌دی].",
+        um_l1: "یاکی پروگرام صفتیده ایاقلاڭ.",
+        btn_video: "ویدیو کورساتمه",
+        amaliyot_title: "عملیت بولیمی",
+        am_2025_desc: "2025 عملیت تقدیوتی.",
+        am_2026_desc: "2026 عملیت تقدیوتی.",
+        btn_open_pdf: "تقدیوتنی اوچیش"
+      },
+      tg_cyrl: {
+        nav_ijod: "Иҷод", nav_asosiy: "Асосӣ", nav_ilm: "Илм",
+        hero_subtitle: "Ҳамгироии илм ва эҷодкорӣ",
+        hero_desc: "Biosteenyc - бренди рақамии Абдулҳаким Хайтбоев, барномасоз ва шоир аз Фарғона.",
+        hero_birth: "[Абдулҳаким - соли 2004, Фарғона, Қӯштепа, Бӯстон]",
+        btn_cv: "Боргирии CV",
+        yt_title: "Ба канали YouTube обуна шавед",
+        yt_sub: "Шеърҳои Абдулҳаким",
+        yt_btn: "Обуна шудан",
+        book_hint: "(Китобро дар формати 3D чархонед ва саҳифаҳоро гардонед)",
+        cat_all: "Ҳама", cat_classic_sherlar: "Фалсафа", cat_hayotiy: "Ватан", cat_muhabbat: "Муҳаббат",
+        ilm_title: "Шӯъбаи лоиҳаҳо ва амалиёт",
+        ilm_sub: "Лоиҳаҳои барномасозӣ ва оптимизатсия",
+        um_badge: "Оптимизатсияи система",
+        um_desc: "Ustamakon - барнома барои оптимизатсияи компютер аз телефони мобилӣ.",
+        um_mob_title: "Дар версияи мобилӣ",
+        um_m1: "Аз Google Play боргирӣ кунед.",
+        um_m2: "Забонро интихоб кунед",
+        um_m3: "Коди QR-ро сканер кунед",
+        um_m4: "Бо компютер пайваст шавед",
+        um_m5: "Хидматро интихоб кунед",
+        um_m6: "Оғоз кунед",
+        um_desk_title: "Дар версияи десктоп",
+        um_w1: "Файли UstaMakon.zip-ро барои Windows боргирӣ кунед.",
+        um_w2: "Файлро кушоед ва UstaMakon.exe-ро пахш кунед.",
+        um_w3: "Агар Smart Screen пайдо шавад: More info -> Run anyway.",
+        um_warning: "[БАРНОМА БЕХАТАР АСТ, ВИРУС НЕСТ].",
+        um_l1: "ё ҳамчун барнома иҷро кунед.",
+        btn_video: "Дастури видеоӣ",
+        amaliyot_title: "Шӯъбаи амалиёт",
+        am_2025_desc: "Муаррифии амалиёти соли 2025.",
+        am_2026_desc: "Муаррифии амалиёти соли 2026.",
+        btn_open_pdf: "Кушодани муаррифӣ"
+      },
+      ky_cyrl: {
+        nav_ijod: "Чыгармачылык", nav_asosiy: "Башкы", nav_ilm: "Илим",
+        hero_subtitle: "Илим жана чыгармачылык айкалышы",
+        hero_desc: "Biosteenyc - Ферганалык программалоочу жана акын Абдулхаким Хайтбоевдин санариптик бренди.",
+        hero_birth: "[Абдулхаким - 2004-жыл, Фергана, Куштепа, Бостон]",
+        btn_cv: "CV Жүктөө",
+        yt_title: "YouTube каналына катталыңыз",
+        yt_sub: "Абдулхакимдин ырлары",
+        yt_btn: "Катталуу",
+        book_hint: "(Китепти 3D форматында айландырып, барактаңыз)",
+        cat_all: "Бардыгы", cat_classic_sherlar: "Философия", cat_hayotiy: "Ата Мекен", cat_muhabbat: "Сүйүү",
+        ilm_title: "Долбоорлор жана Тажрыйба бөлүмү",
+        ilm_sub: "Программалоо жана системалык оптимизация",
+        um_badge: "Системаны оптимизациялоо",
+        um_desc: "Ustamakon - мобилдик телефондон компьютерди оптимизациялоо программасы.",
+        um_mob_title: "Мобилдик версияда",
+        um_m1: "Google Play Marketтен жүктөгүлө.",
+        um_m2: "Тилди тандаңыз",
+        um_m3: "QR кодду сканерлеңиз",
+        um_m4: "Компьютерге туташыңыз",
+        um_m5: "Кызматты тандаңыз",
+        um_m6: "Иштетиңиз",
+        um_desk_title: "Десктоп версияда",
+        um_w1: "Windows үчүн UstaMakon.zip файлын жүктөгүлө.",
+        um_w2: "Zipтен чыгарып, UstaMakon.exe иштетиңиз.",
+        um_w3: "Smart Screen болсо: More info -> Run anyway.",
+        um_warning: "[ПРОГРАММА КООПСУЗ, ВИРУС ЭМЕС].",
+        um_l1: "же уруксат берип иштетиңиз.",
+        btn_video: "Видео көрсөтмө",
+        amaliyot_title: "Тажрыйба бөлүмү",
+        am_2025_desc: "2025-жылкы тажрыйба презентациясы.",
+        am_2026_desc: "2026-жылкы тажрыйба презентациясы.",
+        btn_open_pdf: "Презентацияны Ачуу"
+      }
+    };
+
+    let currentLang = 'uz_latn';
+
+    function changeLanguage(langKey) {
+      currentLang = langKey;
+      const dict = translations[langKey] || translations.uz_latn;
+
+      // Update text nodes
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) {
+          el.textContent = dict[key];
+        }
+      });
+
+      // Handle RTL for Afghani Uzbek
+      if (langKey === 'uz_afg') {
+        document.documentElement.setAttribute('dir', 'rtl');
+      } else {
+        document.documentElement.setAttribute('dir', 'ltr');
+      }
+
+      showToast(`Til almashdi: ${langKey}`);
+    }
+
+    // --- 2. THEME SWITCHER ENGINE ---
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      const icon = document.getElementById('theme-icon');
+      if (isDark) {
+        icon.className = 'fa-solid fa-moon text-yellow-400';
+      } else {
+        icon.className = 'fa-solid fa-sun text-amber-500';
+      }
+      showToast(isDark ? "Tungi rejim yoqildi" : "Kunduzgi rejim yoqildi");
+    }
+
+    // --- 3. SPA ROUTER ENGINE ---
+    function navigateTo(hash) {
+      window.location.hash = hash;
+    }
+
+    function handleRoute() {
+      const hash = window.location.hash || '#/';
+      
+      // Hide all pages
+      document.getElementById('page-asosiy').classList.add('hidden');
+      document.getElementById('page-ijod').classList.add('hidden');
+      document.getElementById('page-ilm').classList.add('hidden');
+
+      // Reset Tab Styles
+      const inactiveClass = "tab-pill flex-1 py-2 rounded-full text-xs font-bold text-center z-10 text-gray-600 dark:text-slate-400";
+      const activeClass = "tab-pill flex-1 py-2 rounded-full text-xs font-bold text-center z-10 bg-m3-primary text-white shadow-md";
+
+      document.getElementById('tab-asosiy').className = inactiveClass;
+      document.getElementById('tab-ijod').className = inactiveClass;
+      document.getElementById('tab-ilm').className = inactiveClass;
+
+      if (hash === '#/ijod') {
+        document.getElementById('page-ijod').classList.remove('hidden');
+        document.getElementById('tab-ijod').className = activeClass;
+        if (!is3DInitialized) init3DBookScene();
+      } else if (hash === '#/ilm') {
+        document.getElementById('page-ilm').classList.remove('hidden');
+        document.getElementById('tab-ilm').className = activeClass;
+      } else {
+        document.getElementById('page-asosiy').classList.remove('hidden');
+        document.getElementById('tab-asosiy').className = activeClass;
+      }
+    }
+
+    window.addEventListener('hashchange', handleRoute);
+    window.addEventListener('load', handleRoute);
+
+    // --- 4. THREE.JS WEBGL 3D BOOK ENGINE WITH DYNAMIC PAGINATION & WRAPPING ---
+    let scene, camera, renderer, bookGroup;
+    let pageMeshLeft, pageMeshRight, turningPageMesh;
+    let currentBookPageIndex = 0;
+    let autoRotate3D = false;
+    let is3DInitialized = false;
+    let isFlipping = false;
+
+    // Poetry Collection Database
+    const rawPoetryDatabase = [
+      {
+        id: 1,
+        title: "Onajonim",
+        category: "classic",
+        lines: [
+"Mehribonim onajonim, qadrligim momojonim",
+"Ko’p yil yashang jonajonim, chiroyligim onajonim.",
+"Quvnab turar ko’zlaringiz, dildan o’chmas so’zlaringiz",
+"Nurli, Nurli yuzlaringiz, chiroyligim onajonim.",
+" ",
+"Onajonim, eng qadrli, Insonim rost siz bo'lasiz.",
+"Mening baxtim, quvonchimga ham-nafasu - sir bo'lasiz",
+"Menga hech kim so'zlamasa, so'zlaydigan, siz bo'lasiz.",
+"Robbimdan men baxt so'rsam, so'raganim siz bo'lasiz.",
+" ",
+"Bir kun uyda bo'lmasangiz, Izlaganim siz bo'lasiz.",
+"Menga Baxtni muvofaqqiyatni, tilagan faqat siz bo'lasiz.",
+"Onajonim, mehribon, suyukligim siz bo'lasiz.",
+"Jonajonim, qadrligim, chiroyligim siz bo'lasiz",
+" ",
+"'Beray borim, fido jonim' deganimda, quvonasiz.",
+"Hammasi zo'r bo'lar desam, faqat o'ziz ishonasiz",
+"Inshaalloh, uzoq yillar duo go'yim siz bo'lasiz.",
+"Tildan qolsam, so'zdan qolsam, ilk so'zim ham siz bo'lasiz.",
+" ",
+"Onajonim, umidlariz mana bugun ro'yob bor.",
+"Sizda ilm yo'llariyu, menda mehr qo'llari bor.",
+"Balaralla aytar so'zim, sizda go'zal bor harorat.",
+"Siz bo'lsanggiz har nafasim bo'lar balki chin ibodat",
+" ",
+"Ko'p qilasiz, yaratganni kalomni tilovat.",
+"Taraladi sizdan doim go'zal-nur va tarovat,",
+"Siz borsizda, menga hamroh sokinlig-u halovat.",
+"Onajonim xursand boʻling, xursand bo'ling to-abat.",
+" ",
+"Muhabbatim sarasini sizga ko'proq atayman.",
+"Sizni sevib dunyolarga qayta qayta maqtayman.",
+"Onajonim siz borsiz-ku, demak juda baxtliman.",
+"Onajonim xursand boʻling, xursand bo'ling to-abad.",
+" ",
+"Yoddan oʻchmas so'zlaringgiz, uzoq yillar boʻlsada.",
+"Balki Koʻzim dunyolarning neʼmatlarin koʻrsada.",
+"Qalbdan oʻchmas abadiy baxtim bo'lib qolavering",
+"Onajonim xursand boʻling, xursand bo'ling to-abad.",
+" ", 
+"Umringiz ham boʻlaversin, barakotli toʻkis uzoq.",
+"Uzoq umr qalbinggizga bo'la olmasin g'ubor tuzoq.",
+"Sizni doim har zamonda baxtli koʻrmoq istayman.",
+"Onajonim xursand boʻling, xursand bo'ling to-abad.",
+" ",
+"Onajonim! har kun eslab, otajonim so'zlarini",
+"Qalbimdan hech o'chirmayman otajonim izlarini,",
+"Otamjonim. kutgan kunlar sekin keldi.",
+"'Kelar kunda, duo qilgin, bizni' derdi.",
+" ",
+"Otajonim yaxshilarni sarasi edi.",
+"Qalbdan o'chmas bo'ldi sog'inch, yarasi endi.",
+"Qani endi yonimda, bo'lsalar edi.",
+"Yurak menga juda ham sog'indim dedi.",
+" ",
+"Otajonim zakovati betakror edi.",
+"Menga Sun'iy Intellektlar kerak emas edi.",
+"Google nima ekani menga begona.",
+"Otajonim bo'lsa edi, Otam yagona!",
+" ",
+"Farzand bo'lib qadriga yetkanim yolg'on.",
+"Hoji ota qilmoqlik bo'ldida armon.",
+"Tezroq yetib kelsa edi, soat-u zamon.",
+"Otajonim sog'indim, sog'indim yomon.",
+" ",
+"Sog'insamda ko'nglim endi bo'ldi obod.",
+"Jannatlarda yurar deyman, eslab bir vaqt",
+"Ohiratda visol topaylik iloyim.",
+"Otamni ko'p xotirlaydi onajonim,",
+" ",
+"Go'zallarning a'losidir onajonim.",
+"Faqat unda meni fikr-u hayolim.",
+"Hayotimning mazmunidir onajonim.",
+"Takror aytay udir meni jonajonim,",
+" ",
+"O'lchashlikni imkoni yo'q qadrini.",
+"Keksalik bukmasinda qaddini.",
+"Hursand qilay, sursin endi davrini.",
+"Qalbidan o'chir onajonim dardini.",
+" ",
+"Sog'inaman bir soniya bo'lmasa.",
+"Hasta bo'lar uni ko'zim ko'rmasa",
+"Ne qilaman uning umri qolmasa.",
+"Nima qilay usiz ko'zim ko'rmasa.",
+" ",
+"Uzoq qilgin onajonim umrini.",
+"Shodon qilgin abadiy dilini.",
+"Asra doim uni to'g'ri yo'lini.",
+"Kavsar ichsin tutib Rosululloh qo'lini.",
+"2026"
+        ]
+      },
+      {
+        id: 2,
+        title: "Ustozlar",
+        category: "classic",
+        lines: [
+          "Mehr bilan, bilim bergan ustozim!",
+          "So'zlab sira, charchamayman shu so'zim",
+          "Maktab ichra ko'rdi sizni qora ko'zim.",
+          "Mamnunlikdan to'xtamaydi bu so'zim",
+          " ",
+          "Berar edingiz darsda rag'bat kartasi.",
+          "Yoddan o'chmas o'sha harf xaltasi.",
+          "Qiziq edi darslaringiz barchasi.",
+          "Oq qog'ozdan yasalgan qor parchasi.",
+          " ",
+          "Ko'zlarimni monitorga qaratib,",
+          "Paskal, Basic, Python, tilin o'rgatib,",
+          "Konsollarda :::Hello:World::: ko'rsatib,",
+          "Doim meni Bill Gatesga o'xshatib.",
+          " ",
+          "O'rgatgansiz Formula va Misollar.",
+          "Butun, ildiz, qoldiq, haqiqiy sonlar.",
+          "Sizlar menga eng sevimli insonlar.",
+          "Ko'p yil yashang rahmat sizga ustozlar!",
+          "--2023"
+
+        ]
+      },
+      {
+        id: 3,
+        title: "Togʻajonim",
+        category: "classic",
+        lines: [
+          "Tog'ajonim bu olamda oqillikning sayyorasi.",
+          "Bizga juda mehribondir, ta'limda ko'p hissasi.",
+          "Ulug'vor bir maqsadga ko'rsatma va yo'llanma.",
+          "Yaxshilikning namunasi ezgulikka qo'llanma.",
+          " ",
+          "Mehr hamda ma'suliyatni jamlagan zo'r birlashma.",
+          "Menga do'stdir, so'zlari komillikdan bir chashma.",
+          "Dastur qilib olarman, xulqi nurli va yuksak",
+          "Uzoq umr tilayman! Chunki bizga siz kerak.",
+          " ",
+          "Tog'ajonim hayotimda eng sevimli ustozim!",
+          "Ta'riflashga cheksizlikda kvant bo'ladi so'zim.",
+          "Ezgulikning fazosida o'rni bordir yagona.",
+          "Shamol kabi yelaman bo'lib unga parvona.",
+          "--2025"
+        ]
+      },
+      {
+        id: 4,
+        title: "Vijdon soʻzi",
+        category: "classic",
+        lines: [
+          "Qadringni ham bilmaysana,",
+          "Bilmam, nelar oʻylaysana,",
+          "Xatolardan toʻymaysana,",
+          "Bu ishlarni qoʻymaysana.",
+          " ",
+          "Qaytgin endi, najot topgin.",
+          "Hidoyatda doim qotgin.",
+          "Havoi nafs, nari otgin.",
+          "Oxir uyda, yaxshi yotgin.",
+          " ",
+          "Bulgʻab meni qaro qilma,",
+          "Qalbi yoʻq deb, gado qilma,",
+          "Halovating, ado qilma.",
+          "Armon ila, qazo qilma.",
+          " ",
+          "U yerdan qaytib kelolmaysan.",
+          "Boshing yerga qoʻyolmaysan.",
+          "Hozir oʻzing, rostlamasang,",
+          "Chin sevgiling koʻrolmaysan.",
+          " ",
+          "Qalbda yurak urmoqda-ku,",
+          "Koʻzing kalom koʻrmoqda-ku,",
+          "Tiling haqni aytmoqda-ku.",
+          "Rahming kelsin, Rahming kelsin.",
+          " ",
+          "Men qiynalib, kettim sendan.",
+          "Qochib ketol-maysan undan.",
+          "Taqvo qilgin sen bugundan.",
+          "Tavba qilgin sen bugundan.",
+          "2023"
+        ]
+      },
+      {
+        id: 5,
+        title: "YOSH DASTURCHI ORZUSI",
+        category: "hayotiy",
+        lines: [
+          "Qator-qator kod yozib,",
+          "Dastur qilay so'zimni",
+          "Google Play'da zo'r bo'lib",
+          "Mashxur qilay o'zimni",
+          " ",
+          "Buyruq bersam bajargan",
+          "Terminalga qoyilman",
+          "Kodni tezroq yozishda",
+          "IDE'ga bog'liqman.",
+          " ",
+          "Android qalbini,",
+          "Debug qilib zabt etay.",
+          "Zerikkancha zerikib,",
+          "Konsollarni tark etay",
+          " ",
+          "Paket ulab kodimga",
+          "Pubspec'ni to'ldirdim.",
+          "Pub get bilan ega bo'lib,",
+          "Deadlinega ulgurdim.",
+          " ",
+          "Widget qurib flutter",
+          "Dizaynni boplaptir.",
+          "Hayratlanib Dasturchi",
+          "Aqli go'yo to'xtabtir.",
+          "2021"
+
+        ]
+      },{
+        id: 6,
+        title: "FLUTTER",
+        category: "hayotiy",
+        lines: [
+          "Paket ulab ishlading",
+          "Ko’p qurilma ushlading",
+          "Dart tilini xushlading",
+          "Moviy rangli flutter",
+          " ",
+          "Qisqa lo’nda so’zlaysanda",
+          "Qulaylikni izlaysanda",
+          "Tezkorlikni ko’zlaysanda",
+          "Zamonaviy flutter",
+          " ",
+          "Sevib qoldi Dasturchilar",
+          "Swift hatto kotlinchilar",
+          "Unity ham paket qurdi",
+          "Paydo bo’lar endi o’yinchilar",
+          " ",
+          "Dastur tuzib Windowsga",
+          "Android, iOSga",
+          "Linux va MacOSga",
+          "Afsonaviy flutter",
+          "2021"
+        ]
+      },
+      {
+        id: 7,
+        title: "Dasturlash",
+        category: "hayotiy",
+        lines: [
+          "O'qib kitob maktabimda,",
+          "Qalbda bir sir saqladimda",
+          "Uni doim yo'qladimda",
+          "Mashaqqatli DASTURLASH",
+          " ",
+          "Dil bermagan Turbo Pascal",
+          "Seni deya, majnun kasal.",
+          "Nechun endi, Qiynab meni",
+          "Yo'q bo'ldinga Borland Delphi",
+          " ",
+          "Oshiq bo'lib satrlaringga",
+          "Bracket</> qo'ydim teglaringga",
+          "Xaridor bo'lib barchangizga",
+          "HTML u XML lingga",
+          " ",
+          "Bezak berib HTML ga",
+          "Yoqib qolding, bu ko'ngilga",
+          "Style tegi yozar edim",
+          "Mos bo'lmadim CSS ga",
+          " ",
+          "Charchasamda ko'p yiqilib,",
+          "Mehr berdim, umid qilib",
+          "Sen ham osha-osha bo'lding",
+          "Zor qilding-ga JavaScript",
+          " ",
+          "Qarshi olding kulib-kulib,",
+          "Topdim dedim, yurib yurib,",
+          "Mensimading sen ham hullas,",
+          "Armon bo'lgan C++ (plas plas).",
+          " ",
+          "Topdim dedim izlab zora,",
+          "Class yozib, yurak pora",
+          "Muhabbatim, edi Lava",
+          "Zor yig'latgan O'sha JAVA",
+          " ",
+          "Go'zal UI, Senda ekan.",
+          "Tezkor Vulkan render ekan.",
+          "Dart tili ham senda ekan.",
+          "Sen ketmagin Flutter",
+          " ",
+          "Soddadirsan moviygina",
+          "Kod mantig'i oddiygina",
+          "Widget bilan qurilgaysan.",
+          "Tezkorgina, Sirligina.",
+          " ",
+          "Unutolmay seni so'zlab,",
+          "Google ichra qalbing izlab",
+          "Internetni kezdimda soz,",
+          "Mehr bergin menga biroz.",
+          " ",
+          "She'r qildimda so'zlab seni",
+          "O'quv markazi izlar meni",
+          "Borolmayman axir endi.",
+          "Bepulmisan yoki endi.",
+          " ",
+          "Orzu qilib, Code vaslini",
+          "Google playda Blog qasrini",
+          "Bir Loyiha yaratolmay.",
+          "Tortayapman Alam zahrini.",
+          " ",
+          "BotCamb senga yetolmayman.",
+          "Tajribamni ortolmayman",
+          "Mendan sabab so'ramagin",
+          "Buni sira aytolmayman.",
+          " ",
+          "7 yil-ki kod yozarman",
+          "Zo'r Coder'dan ham o'zarman",
+          "Tajribasiz shu yurishda",
+          "Aniq aqldan ozarman.",
+          "2022"
+        ]
+      },
+      {
+        id:8,
+        title: "Qalbimning arznomasi",
+        category: "hayotiy",
+        lines: [
+          "Kod yozsam ham koʻp tillarda",
+          "Natijasi konsollarda",
+          "Debug qilib har yoʻllarda",
+          "Mashxur boʻldik hayollarda",
+          " ",
+          "Yozgan kodim oʻqib boʻlmas",
+          "Mazmuniga yetib boʻlmas",
+          "Gar bu yoʻlda yolgʻiz boʻlsam",
+          "Manzilimga yetib boʻlmas",
+          " ",
+          "Jamoani orzu qilib",
+          "Eʼlon berdim koʻz - koʻz qilib",
+          "Talab qilsa vazifalar",
+          "Bajarolmay attang qilib",
+          " ",
+          "Yiroqlarda qolar orzu",
+          "Hamon tajribam ham oz-ku",
+          "Yozgan kodim menga koʻzgu",
+          "Qilgim kelar ishlar ezgu",
+          " ",
+          "Tanimaysiz meni hamon",
+          "Talpingayman siz tomon",
+          "Taklif eting jamoaga",
+          "Kod yozayin har zamon",
+          " ",
+          "Ishq dardim-ki kod vaslidir",
+          "Mobil App-lar koʻnglim qasridir",
+          "Hozir zamon IT asridir",
+          "Soʻzlarim qalbimning arzidir",
+          "2023"
+        ]
+      },
+      {
+        id: 9,
+        title: "Dasturlash yoʻli",
+        category: "hayotiy",
+        lines: [
+          "O'ralgan tog'li makonda, yashayapti shu zamonda,",
+          "Abdulloh yashyapti, kod yozmoqqa zor bo’lyapti.",
+          "Dasturlash orzusida, mantiq bordir so'zida.",
+          "Yaxshi niyat bor edi, ko'zlarida nur edi.",
+          " ",
+          "Ko'zlagan ilk yo'lini, o'rganib Paskal tilini,",
+          "Kodi zamondan eski, rad etmasdi o'zini.",
+          "Ko'rinar ko'zga yorqin. Delphi paskaldan ustun.",
+          "O'rganish yo'li sekin, C(Siy) tili edi erkin.",
+          " ",
+          "Yozar qator qator kod, qalbi alangali o't.",
+          "Ammo kodi yurmasdi, samarali mantiq yo'q.",
+          "Qamrab oldi Web olam, yo'lida sun'iy malham(AI).",
+          "Internetni bezamoq, berar hammaga yordam.",
+          " ",
+          "HTML tili ustun, CSS bezar butun.",
+          "JS, Python, Go tili, berar tarmoqqa hukum.",
+          "Abdullohni kodlari, o'xshamagan ilgari.",
+          "Unutilib borardi, qo'llanmagan ilmlari..",
+          " ",
+          "Ustoz bo'lib Ikromjon, qo'lin cho'zdi bir kuni.",
+          "Abdulloh hursand edi, ushalgandek orzuyi.",
+          "Java/Kotlin tillari, ochardi ko'p sirlarni.",
+          "Ilovalar yaratmoq, orzular ketar nari.",
+          " ",
+          "O'tib oylardan kuni, qalbi yana o'ksindi.",
+          "Yolg'iz kod yozar edi, mantiqni bilmas edi.",
+          "Mashina kodi birla, qarshi oldi Sun'iy idrok.",
+          "Sameriya AI keldi, bo'lib elektron o'rtoq.",
+          " ",
+          "Generativ kod yozardi, Abdulloh prompt berar.",
+          "Ishlari yurib ketdi. Asl ilmni tark etar.",
+          "Nurli ilmga bo'lib timsol, Akbarjon ustoz berar misol.",
+          "Flutter va Dart birla, Google Playda topdi visol.",
+          " ",
+          "Bir loyiha yuklgandi, KOMPYUTER SIRLARIN ochar.",
+          "Abdulloh istagandi, hamma uni yuklab olar.",
+          "Yana bo'ldi mustaqil. Kod yozardi yiroqda.",
+          "Ustozi ortda qoldi, saboq bergan har holda.",
+          " ",
+          "O'z ustida ishladi. Dart tilini xushladi.",
+          "Topay deya komillik, bir firmada ham ishladi.",
+          "Yolg'iz kod yozmoqlikda, tajribasi qo'rqitdi. ",
+          "To'g'ri yo'lni ko'ra olmay, u yerni ham tark etdi.",
+          " ",
+          "Qiyin edi sharoit, kod yozgani sherik yo'q.",
+          "Shogirt qilib olsangiz, bo'lar edi Ko'nglim to'q.",
+          "Jamoaga qo'shilsak, birgalikda ishlasak.",
+          "Do'stlardan saboq olib, Start UP'lar boshlasak.",
+          " ",
+          "Men kutarman sizlarni,", 
+          "She'r qilib shu so'zlarni.",
+          "Uzoqdan bering sado",
+          "Bo'lmayin yolg'iz ado.",
+          "2024"
+        ]
+      },
+      {
+        id: 10,
+        title: "QADRSIZ VAQT MENI QADRIMMI?",
+        category: "hayotiy",
+        lines: [
+          "Istab dastur yozmoq birla oʻqib kodlar kitobini.",
+          "Obod etdim, parvonaman. Bezab monitor oldini.",
+          "Qadrim uchun qurbon qilib qoʻymoqdaman vaqtni.",
+          "Bu ishlarim shod etar-mi oʻzim yoki buyuq haqni.",
+          " ",
+          "Xalq uchun bir xizmat qilay, deyman - ammo ilmim noqis.",
+          "Borsam IT markaziga aytar tajribang ham tanqis.",
+          "Oʻrganmoqqa mahkum boʻlib takror takror oʻqib yolgʻiz.",
+          "Tajribasiz yolgʻizlikda bilganlarim bilmas boʻlar, qiynar qalbim qilib nomus.",
+          " ",
+          "Qoʻlni ochib qilarman-ki, doim haqqa dildan fayrod.",
+          "Koʻrar koʻzlar aytaverar - Sababin qil shudir hayot.",
+          "Sababin chin qiloldimmi? halovatim boʻlmasmi barbod.",
+          "Men yolgʻizman! qoʻldan tuting, qilib shogirt boʻling ustoz!",
+          " ",
+          "Githublarda kodlar yozib, koʻzingizga koʻzgu qildim.",
+          "Yolgʻiz yaxshi boʻlmas ekan, yakkalikda chindan bildim.",
+          "Topolmadim izlab sizni, topmoqlikni maqsad qildim.",
+          "Siz meni toping deya shu sheʼrimni barpo qildim.",
+          "2025"
+        ]
+      },
+      {
+        id: 11,
+        title: "DASTURLASHDAN KECHOLMAYMAN",
+        category: "hayotiy",
+        lines: [
+          "Hisoblash yiroq boʻldi, ",
+          "Dasturlashdan mantiq qani?",
+          "Algoritm bilamiz-ku, ",
+          "Tizimlarda tartib qani.",
+          " ",
+          "Kodlash ilmi hanuz yiroq, ",
+          "Yetolmadim quvib uni,",
+          "Nega kodlar yozmoqdaman.",
+          "Oʻylab tushunmadim shuni.",
+          " ",
+          "Kecholmayman dasturlashdan",
+          "Ketolmayman dasturlashdan ",
+          "Kezolmayman oʻzga bogʻu",
+          "Oʻzga kasb koʻchasidan.",
+          " ", 
+          "Bu koʻchada yoʻlim yopiq.",
+          "Oʻz - oʻzimga qurdim qobiq.",
+          "Befoydalik ishlarimdan,",
+          "Qidiryapman soxta hordiq.",
+          " ",
+          "Kod men uchun emas majbur.",
+          "Kodlashga emasman masʼul.",
+          "Ketsam balki boʻlar maʼqul.",
+          "Dasturlashdan kecholmayman.",
+          " ",
+          "Atrofimda goʻzal bogʻlar.",
+          "Men yoʻlimda faqat dogʻlar.",
+          "Dasturlashga qalbim bogʻlar",
+          "Dasturlashdan kecholmayman.",
+          " ",
+          "Boʻldim telba yoki gʻarib, ",
+          "Dasturlash qadrim agʻdarib,",
+          "20 yoshimda qarib,",
+          "Dasturlashdan kecholmayman.",
+          " ",
+          "Dasturlashdan kecholmayman ",
+          "Ammo toʻliq yetolmayman.",
+          "Koʻnglimdagi bir bor toʻsiq.",
+          "Uni hadlab oʻtolmayman", 
+          "2025"
+        ]
+      },
+      {
+        id: 12,
+        title: "Vaqt qadri",
+        category: "hayotiy",
+        lines: [
+          "Yoshlik oʻtdi, monitoʻrdan piksel sanab",
+          "Qoldim endi, alang alang har yoqqa qarab",
+          "Shuncha yil-ki, yurdimmi men oʻzim aldab.",
+          "Najot kerak, Qoʻymasimdan oʻzimni qargʻab.",
+          " ",
+          "IT(AiyTiy) deya, Koʻp dasturlarni koʻrgandima,",
+          "Dastur tuzay deya tillar oʻrgandima",
+          "Tahlil qilib, aytay qildim endi nima",
+          "Darmon boʻlar bu qalbimga endi kim-a?",
+          " ",
+          "Yaxshilikni tarqatgani joʻshib joʻshib,",
+          "Oʻqiyverdim tekshirmasdan juda shoshib",
+          "Mana endi oʻtiribman haddan oshib,",
+          "Hech narsa yoʻq, kundan kunga Asab oshib.",
+          " ",
+          "Bimadimda attang, vaqt qadrini",
+          "Foydasi yoʻq, hech kimga-yey bu dardimni.",
+          "Achinolmas buni koʻrib chin doʻstim ham",
+          "Sabab shuki Dasturchi emas, boshqa olam.",
+          "2024"
+        ]
+      },
+      {
+        id: 13,
+        title: "Ukajonim olgʻa",
+        category: "hayotiy",
+        lines: [
+          "Qatorlar orasida yashaysiz,",
+          "Kodlarni me'moriga o'xshaysiz",
+          "Debug qilib yozgan kodlarni",
+          "Doim hurmat qilgaymiz sizlarni",
+          " ",
+          "Yangilaysiz kodlarni har kuni",
+          "Tekshirib, to'grilab, tuzatib uni",
+          "Qiyin demangda aslo siz buni",
+          "Dasturchi bo'lasiz bir kuni.",
+          " ",
+          "if, else, loop larni shart qilib",
+          "Olmangnda qalbingga dard qilib",
+          "Sinab ko'ring, yozib ko'ring test qilib",
+          "Yodingizdan o'chmasin ishqilib.",
+          " ",
+          "Mobil ilova yoki sahifa",
+          "Ko'zlaring porlasin hamisha",
+          "Qiyinchilikni bilingda zo'r o'yin",
+          "Natija qilgaysiz ishonchim tayin.",
+          " ",
+          "Topgaysiz jamoani bir kuni",
+          "Internetda qidirar ular seni",
+          "Shunda esga olarsiz siz meni",
+          "Nasib etar istasangiz har neni.",
+          " ",
+          "Tan olingiz kodlarda hayolingiz",
+          "Jo'sh urar shodlikda hayotingiz",
+          "Deyarli marraga yaqin bordingiz",
+          "Deyarli barcha bilimlarni oldingiz",
+          " ",
+          "Yozavering kodlarni charchamang",
+          "Yiqilsangiz yo'lingizdan to'xtamang",
+          "Ukajonim siz menga o'xshamang",
+          "Olg'a bo'ring, ukajonim to'xtamang.",
+          "2024"
+        ]
+      },
+      {
+        id: 14,
+        title: "AYTING SIZ HAM",
+        category: "muhabbat",
+        lines: [
+          "Ko'zlaringiz kulib turar.",
+          "Buni barcha bilib turar.",
+          "Havas qilib nechalari.",
+          "Majnun bo'ldi anchalari.",
+          " ",
+          "Qaramoqqa ko'z qorqadi.",
+          "So'zlamoqqa til tortadi.",
+          "Boray desak yurmas qadam.",
+          "Robbisidan qo'rqadida.",
+          "Sevgan odam, Mo'min odam.",
+          " ",
+          "Qalbga yetar izhorsiz ham.",
+          "Sevaverar visolsiz ham.",
+          "Sevgandirsin balki siz ham.",
+          "Ayting erkam, ayting siz ham",
+          "2020"
+        ]
+      },
+      {
+        id: 15,
+        title: "Forsiy qiz",
+        category: "muhabbat",
+        lines: [
+          "Vasling istab ortingdan, borgim kelar forsiy qiz.",
+          "Yuragimning to'fonin, bir so'z bilan olgan qiz",
+          "Solgansizda nurli nigoh, qalbim sizdan aksado",
+          "Quyosh botar tomonlarda noming yotar forsiy qiz.",
+          " ",
+          "Kechalarda oy va yulduz nurlaridan izlayin.",
+          "Soginchimni suv va havo, shabbodaga so'zlayin.",
+          "Sog'inchlarim qumsayversa sizni qanday unutayin.",
+          "Sizdek hech kim bo'lolmasa, ayt nelarga ko'nikayin.",
+          " ",
+          "Forsiy qiz, siz qalbimdan kechib bo'lmas orzuyim.",
+          "Tinim bilmas kecha - kunduz hayoldasiz har doim.",
+          "Hech bo'lmasa havzalarda aksing ko'rmoq istayman.",
+          "Borligingga intlaman, afsonaviy forsiy qiz.",
+          "2025"
+        ]
+      },
+      {
+        id: 16,
+        title: "Sogʻinch",
+        category: "muhabbat",
+        lines: [
+          "Osmonda yulduzlar, kechalari oy.",
+          "Termulaman jimlikda, surib shirin oʻy",
+          "Porlab turgan yulduzlar sirin aytadi",
+          "Shu tariqa hayotim davom etadi.",
+          " ",
+          "Sepkil yuzli oydanda yorqin yuzligim,",
+          "Sizsiz yorug' bo'lmas hatto kunduzim",
+          "Ayta olmasamda qalbdagi so'zim.",
+          "Doim termuladi yo'lingga ko'zim.",
+          " ",
+          "Umid qilib termulaman samoga,",
+          "Sizdan yo'q hamon ishora.",
+          "Bo'ldima, eh telba bechora",
+          "Sabrim yetarmi-yey bormi chora.",
+          " ",
+          "Eh yana yaratdim sevgi misrasin,",
+          "Aybdor bo'lsakda hudo asrasin.",
+          "Hozirda eslaynmiz qilib iltijo.",
+          "Soati kelganda bizni eslasin.",
+          "2024"
+        ]
+      },
+      {
+        id: 17,
+        title: "Qalbimning forsiy nolasi",
+        category: "muhabbat",
+        lines: [
+          "Abadiy tinglayman forsiy qo’shiqlar",
+          "Yolg’iz qolganda qalb pinhona yig’lar",
+          "Uzoqlarda sarson yo’qoldi qadrim",
+          "Seni qidirib hatto topmasman qabring",
+          " ",
+          "Tiriksan ammo meni tanimas qalbing",
+          "O’zgargan moslashgan o’zgacha darding",
+          "Bir necha muddat qahrabo eding",
+          "Endi esa ovozsiz alvido deding",
+          " ",
+          "20 yoshimda bo’ldima qari",
+          "Quvonch-u kulgular ko’zimdan nari",
+          "Mehring kamayardi borgani sari",
+          "Soxta deganingda tugadi bari",
+          " ",
+          "Endi kimlargadir qalbingni ochib",
+          "Istamas bo’lsada mehringni sochib",
+          "Men dunyo chetida qarayman yerga",
+          "Bu so’zlarim hatto bormaydi senga",
+          "2025"
+        ]
+      },
+      {
+        id: 18,
+        title: "Ishq tanazzuli",
+        category: "muhabbat",
+        lines: [
+          "Seni soʻrab behostan, uygʻonib qoldi yurak.",
+          "Qaro koʻzlar nigohidan, qizgʻongan boʻlsa kerak.",
+          "Mavjud boʻlsang bu olamda, Boringdan bergin darak.",
+          "Bilaman... balki sen ham, sogʻingan boʻlsang kerak",
+          " ",
+          "Sogʻintirib yashayapsan, boʻlib menga begona.",
+          "Yuragim koʻnikmaydi, kutar seni pinhona.",
+          "Qachonlardir men oshiqni, eslaysanmi bir bora?",
+          "Shu damlarda qaytmoqlikka toparmikinsan chora?",
+          " ",
+          "Qay orzular asirisan, u sirlaring nomaʼlum.",
+          "Balki hanuz sevarsan, unisi haqqa maʼlum.",
+          "Bugun seni kutaverib, boʻlib qoldim Balʼaziy.",
+          "Qoʻrqaman... seni sevib, boʻlmayin haqqa osiy.",
+          " ",
+          "Ishq deb motam dargohida, qaygʻularga pir  boʻldim.",
+          "Ishq aslini anglay olmay, yurak bagʻri kir boʻldim.",
+          "Seni sevib intilgancha, boʻlarimcha boʻlib boʻldim.",
+          "Oʻzga emas, faqat seni koʻzlaringdan nurni koʻrdim.",
+          " ",
+          "His etaman, adashganlar... avlodiga men rahnamo.",
+          "Ishq yoʻlini koʻrolmadim, senga boʻldim mahliyo.",
+          "Ildam boʻlsang haq yoʻlida, men qaroni olib ket.",
+          "Zaifgina bu qalbimga ishq neligin aytib ket.",
+          "2026"
+        ]
+      },
+      {
+        id: 19,
+        title: "Hilol va Muhabbat",
+        category: "muhabbat",
+        lines: [
+          "Koinot keng sirlari bor.",
+          "Millionlagan yulduzlari bor.",
+          "Shu yulduzlar eng sarasi,",
+          "Iliq yuzli quyoshimiz bor.",
+          " ",
+          "Yorug' etar sayyoralarni.",
+          "Paydo etar tong saharni.",
+          "Mehmon etar yoz-u bahorni.",
+          "Beqiyosdir hayotda o'rni.",
+          " ",
+          "Toshli hilqat Asteroit.",
+          "Yerga otma Meteorit.",
+          "Koinotning tumanliklari.",
+          "Qiziqtirar uning sirlari.",
+          " ",
+          "Yerga yo'ldosh sepkil yuzli oy.",
+          "Tebranadi ummon, dengiz, soy.",
+          "Yuzi yorug' hatto tunda ham,",
+          "Ko'rinsayding hatto kunda ham.",
+          " ",
+          "Koinotni qilib sayohat.",
+          "Topasanmi bundan rohat.",
+          "Tilga oldim seni kometa.",
+          "Taqlid qilar senga roketa.",
+          " ",
+          "Mehri jo'shqin qora tuynuk.",
+          "Bag'ringga bos biz seni suydik.",
+          "Hammaga sen ochasan quchoq.",
+          "Mehmon bo'lay senga men kechroq.",
+          " ",
+          "Totqilaysan yorqindan tezroq.",
+          "Balki senda vaqtlar ham tezroq.",
+          "Borgim keldi meni hoziroq.",
+          "Sayyoh bo'lib vaqtlarga hamroh.",
+          "2024"
+        ]
+      }
+    ];
+
+    let currentCategoryFilter = 'all';
+    let formattedBookPages = [];
+
+    // Dynamic Pagination & Auto Word-Wrap Engine
+    function buildPaginatedBookPages(categoryFilter = 'all') {
+      const pages = [];
+      const filteredPoetry = categoryFilter === 'all' 
+        ? rawPoetryDatabase 
+        : rawPoetryDatabase.filter(p => p.category === categoryFilter);
+
+      const tempCanvas = document.createElement('canvas');
+      const ctx = tempCanvas.getContext('2d');
+      ctx.font = '600 36px "Playfair Display", Georgia, serif';
+      const maxLineWidth = 860;
+
+      filteredPoetry.forEach(poem => {
+        const wrappedLines = [];
+        poem.lines.forEach(line => {
+          if (ctx.measureText(line).width <= maxLineWidth) {
+            wrappedLines.push(line);
+          } else {
+            const words = line.split(' ');
+            let currentLine = '';
+            words.forEach(word => {
+              const testLine = currentLine ? currentLine + ' ' + word : word;
+              if (ctx.measureText(testLine).width > maxLineWidth) {
+                wrappedLines.push(currentLine);
+                currentLine = word;
+              } else {
+                currentLine = testLine;
+              }
+            });
+            if (currentLine) wrappedLines.push(currentLine);
+          }
+        });
+
+        const linesPerPageFirst = 8;        
+        const linesPerPageContinuation = 13;
+
+        let lineIdx = 0;
+        let pageNumInPoem = 1;
+
+        while (lineIdx < wrappedLines.length || pageNumInPoem === 1) {
+          const isFirst = (pageNumInPoem === 1);
+          const maxLines = isFirst ? linesPerPageFirst : linesPerPageContinuation;
+          const chunk = wrappedLines.slice(lineIdx, lineIdx + maxLines);
+
+          pages.push({
+            poemId: poem.id,
+            title: poem.title,
+            category: poem.category,
+            lines: chunk,
+            isContinuation: !isFirst,
+            poemPageNum: pageNumInPoem,
+            isLastPageOfPoem: (lineIdx + maxLines >= wrappedLines.length)
+          });
+
+          lineIdx += maxLines;
+          pageNumInPoem++;
+          if (wrappedLines.length === 0) break;
+        }
+      });
+
+      formattedBookPages = pages;
+      if (currentBookPageIndex >= formattedBookPages.length) {
+        currentBookPageIndex = 0;
+      }
+      return formattedBookPages;
+    }
+
+    function createPoetryTexture(pageData) {
+      const canvas = document.createElement('canvas');
+      canvas.width = 1024;
+      canvas.height = 1400;
+      const ctx = canvas.getContext('2d');
+
+      // Paper Background
+      ctx.fillStyle = '#f4efe6';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Frame border
+      ctx.strokeStyle = '#c2b49a';
+      ctx.lineWidth = 4;
+      ctx.strokeRect(40, 40, canvas.width - 80, canvas.height - 80);
+
+      if (pageData && pageData.lines) {
+        let startY = 440;
+        let lineHeight = 80;
+
+        if (pageData.isContinuation) {
+          // --- CONTINUATION PAGE ---
+          ctx.fillStyle = '#0f172a';
+          ctx.font = 'bold 38px "Playfair Display", Georgia, serif';
+          ctx.textAlign = 'center';
+          ctx.fillText(`${pageData.title} (Davomi)`, canvas.width / 2, 130);
+
+          ctx.fillStyle = '#0f766e';
+          ctx.font = 'italic 24px "Plus Jakarta Sans", sans-serif';
+          ctx.fillText('Abdulhakim Sheʻrlari • Biosteenyc', canvas.width / 2, 180);
+
+          ctx.beginPath();
+          ctx.moveTo(300, 210);
+          ctx.lineTo(canvas.width - 300, 210);
+          ctx.strokeStyle = '#d0c4ad';
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+
+          startY = 290;
+          lineHeight = 72;
+        } else {
+          // --- FIRST PAGE ---
+          ctx.fillStyle = '#0f172a';
+          ctx.font = 'bold 54px "Playfair Display", Georgia, serif';
+          ctx.textAlign = 'center';
+          ctx.fillText(pageData.title, canvas.width / 2, 180);
+
+          ctx.fillStyle = '#0f766e';
+          ctx.font = 'italic 30px "Plus Jakarta Sans", sans-serif';
+          ctx.fillText('Abdulhakim Sheʻrlari • Biosteenyc', canvas.width / 2, 255);
+
+          ctx.beginPath();
+          ctx.moveTo(220, 295);
+          ctx.lineTo(canvas.width - 220, 295);
+          ctx.strokeStyle = '#b0a080';
+          ctx.lineWidth = 2;
+          ctx.stroke();
+
+          startY = 430;
+          lineHeight = 82;
+        }
+
+        // Draw Poetry Lines
+        ctx.fillStyle = '#0f172a';
+        ctx.font = '600 36px "Playfair Display", serif';
+        ctx.textAlign = 'center';
+        pageData.lines.forEach((line, idx) => {
+          ctx.fillText(line, canvas.width / 2, startY + (idx * lineHeight));
+        });
+
+        // Page footer info
+        ctx.fillStyle = '#64748b';
+        ctx.font = 'bold 22px sans-serif';
+        const pageText = pageData.isContinuation 
+          ? `Biosteenyc • ${pageData.poemPageNum}-bet` 
+          : 'Biosteenyc 2016-2026';
+        ctx.fillText(pageText, canvas.width / 2, 1290);
+      }
+
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.needsUpdate = true;
+      return texture;
+    }
+
+    function init3DBookScene() {
+      const container = document.getElementById('book-canvas-container');
+      if (!container) return;
+
+      const width = container.clientWidth;
+      const height = container.clientHeight || 520;
+
+      if (is3DInitialized) {
+        renderer.setSize(width, height);
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+        return;
+      }
+
+      is3DInitialized = true;
+      buildPaginatedBookPages(currentCategoryFilter);
+
+      // Scene setup
+      scene = new THREE.Scene();
+
+      camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 1000);
+      camera.position.set(0, 0.2, 4.2);
+
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setSize(width, height);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.shadowMap.enabled = true;
+      container.appendChild(renderer.domElement);
+
+      // SMART LIGHTING SYSTEM (Prevents overexposure & glare)
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.45);
+      scene.add(ambientLight);
+
+      const hemiLight = new THREE.HemisphereLight(0xffffff, 0x333333, 0.25);
+      hemiLight.position.set(0, 10, 0);
+      scene.add(hemiLight);
+
+      const headlight = new THREE.DirectionalLight(0xffffff, 0.35);
+      headlight.position.set(0, 0, 1);
+      camera.add(headlight);
+      scene.add(camera);
+
+      const backLight = new THREE.DirectionalLight(0xfffaed, 0.15);
+      backLight.position.set(0, 0, -5);
+      scene.add(backLight);
+
+      bookGroup = new THREE.Group();
+      scene.add(bookGroup);
+
+      // Book Cover
+      const coverGeo = new THREE.BoxGeometry(3.3, 2.3, 0.08);
+      const coverMat = new THREE.MeshStandardMaterial({ color: 0x00363d, roughness: 0.5 });
+      const cover = new THREE.Mesh(coverGeo, coverMat);
+      cover.position.set(0, 0, -0.05);
+      bookGroup.add(cover);
+
+      // Book Paper Meshes
+      const pageWidth = 1.55;
+      const pageHeight = 2.15;
+      const pageGeo = new THREE.PlaneGeometry(pageWidth, pageHeight, 20, 1);
+      pageGeo.translate(pageWidth / 2, 0, 0);
+
+      const paperMatProps = {
+        roughness: 0.8,
+        metalness: 0.0,
+        emissive: 0x000000,
+        side: THREE.DoubleSide
+      };
+
+      const textureLeft = createPoetryTexture(formattedBookPages[0]);
+      const matLeft = new THREE.MeshStandardMaterial({ map: textureLeft, ...paperMatProps });
+      pageMeshLeft = new THREE.Mesh(pageGeo, matLeft);
+      pageMeshLeft.position.set(-pageWidth, 0, 0);
+      bookGroup.add(pageMeshLeft);
+
+      const textureRight = createPoetryTexture(formattedBookPages[1] || null);
+      const matRight = new THREE.MeshStandardMaterial({ map: textureRight, ...paperMatProps });
+      pageMeshRight = new THREE.Mesh(pageGeo, matRight);
+      pageMeshRight.position.set(0, 0, 0);
+      bookGroup.add(pageMeshRight);
+
+      const turnGeo = pageGeo.clone();
+      const turnMat = new THREE.MeshStandardMaterial({ map: textureRight, ...paperMatProps });
+      turningPageMesh = new THREE.Mesh(turnGeo, turnMat);
+      turningPageMesh.position.set(0, 0, 0.01);
+      turningPageMesh.visible = false;
+      bookGroup.add(turningPageMesh);
+
+      bookGroup.rotation.x = 0.2;
+      updateBookPageDisplay();
+
+      // Mouse & Touch Controls
+      let isDragging = false;
+      let previousMousePosition = { x: 0, y: 0 };
+      const canvasEl = renderer.domElement;
+
+      const getCoord = (e) => e.touches ? e.touches[0] : e;
+
+      const onMouseDown = (e) => {
+        isDragging = true;
+        const c = getCoord(e);
+        previousMousePosition = { x: c.clientX, y: c.clientY };
+      };
+
+      const onMouseMove = (e) => {
+        if (!isDragging) return;
+        const c = getCoord(e);
+        const deltaX = c.clientX - previousMousePosition.x;
+        const deltaY = c.clientY - previousMousePosition.y;
+
+        bookGroup.rotation.y += deltaX * 0.006;
+        bookGroup.rotation.x += deltaY * 0.006;
+
+        previousMousePosition = { x: c.clientX, y: c.clientY };
+      };
+
+      const onMouseUp = () => { isDragging = false; };
+
+      canvasEl.addEventListener('mousedown', onMouseDown);
+      canvasEl.addEventListener('mousemove', onMouseMove);
+      window.addEventListener('mouseup', onMouseUp);
+
+      canvasEl.addEventListener('touchstart', onMouseDown);
+      canvasEl.addEventListener('touchmove', onMouseMove);
+      window.addEventListener('touchend', onMouseUp);
+
+      function animate() {
+        requestAnimationFrame(animate);
+        if (autoRotate3D && bookGroup) {
+          bookGroup.rotation.y += 0.008;
+        }
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      window.addEventListener('resize', () => {
+        if (!container || !renderer) return;
+        const w = container.clientWidth;
+        const h = container.clientHeight || 520;
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+        renderer.setSize(w, h);
+      });
+    }
+
+    function flipBookPage(direction) {
+      if (isFlipping) return;
+
+      const newIndex = currentBookPageIndex + direction;
+      if (newIndex < 0 || newIndex >= formattedBookPages.length) {
+        showToast(direction > 0 ? "Oxirgi sahifadasiz" : "Birinchi sahifadasiz");
+        return;
+      }
+
+      isFlipping = true;
+      playFlipSound();
+
+      const startAngle = direction > 0 ? 0 : -Math.PI;
+      const endAngle = direction > 0 ? -Math.PI : 0;
+
+      const nextPoemPage = formattedBookPages[newIndex];
+      turningPageMesh.material.map = createPoetryTexture(nextPoemPage);
+      turningPageMesh.material.needsUpdate = true;
+      turningPageMesh.rotation.y = startAngle;
+      turningPageMesh.visible = true;
+
+      gsap.to(turningPageMesh.rotation, {
+        y: endAngle,
+        duration: 0.7,
+        ease: "power2.inOut",
+        onUpdate: function () {
+          const progress = this.progress();
+          const bend = Math.sin(progress * Math.PI) * 0.25;
+          const pos = turningPageMesh.geometry.attributes.position;
+          for (let i = 0; i < pos.count; i++) {
+            const vx = pos.getX(i);
+            pos.setZ(i, Math.sin((vx / 1.55) * Math.PI) * bend);
+          }
+          pos.needsUpdate = true;
+        },
+        onComplete: function () {
+          currentBookPageIndex = newIndex;
+          turningPageMesh.visible = false;
+          
+          pageMeshLeft.material.map = createPoetryTexture(formattedBookPages[currentBookPageIndex]);
+          pageMeshLeft.material.needsUpdate = true;
+
+          const rightIndex = currentBookPageIndex + 1;
+          pageMeshRight.material.map = createPoetryTexture(formattedBookPages[rightIndex] || null);
+          pageMeshRight.material.needsUpdate = true;
+
+          updateBookPageDisplay();
+          isFlipping = false;
+        }
+      });
+    }
+
+    function updateBookPageDisplay() {
+      const pageDisp = document.getElementById('book-page-num');
+      if (pageDisp) {
+        const total = formattedBookPages.length || 1;
+        pageDisp.textContent = `Bet: ${currentBookPageIndex + 1} / ${total}`;
+      }
+    }
+
+    function prevBookPage() { flipBookPage(-1); }
+    function nextBookPage() { flipBookPage(1); }
+
+    function toggle3DRotation() {
+      autoRotate3D = !autoRotate3D;
+      showToast(autoRotate3D ? "3D Avto-aylantirish yoqildi" : "3D Avto-aylantirish o'chirildi");
+    }
+
+    function changePoetryCategory(cat, btn) {
+      document.querySelectorAll('.cat-btn').forEach(b => {
+        b.className = 'cat-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-m3-lightSurfaceVariant dark:bg-m3-surfaceVariant text-gray-700 dark:text-slate-300';
+      });
+      btn.className = 'cat-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-m3-primary text-white';
+      
+      currentCategoryFilter = cat;
+      buildPaginatedBookPages(currentCategoryFilter);
+      currentBookPageIndex = 0;
+
+      if (pageMeshLeft && pageMeshRight) {
+        pageMeshLeft.material.map = createPoetryTexture(formattedBookPages[0]);
+        pageMeshLeft.material.needsUpdate = true;
+        pageMeshRight.material.map = createPoetryTexture(formattedBookPages[1] || null);
+        pageMeshRight.material.needsUpdate = true;
+      }
+      updateBookPageDisplay();
+      showToast(`Kategoriya: ${cat}`);
+    }
+
+    // --- 5. REAL PDF.JS PRESENTATION VIEWER ENGINE ---
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+    let pdfDoc = null;
+    let pdfPageNum = 1;
+    let pdfPageRendering = false;
+    let pdfNumPages = 1;
+
+    function openPDFViewer(title, url) {
+      document.getElementById('pdf-modal-title').textContent = title;
+      document.getElementById('pdf-modal').classList.remove('hidden');
+      document.getElementById('pdf-modal').classList.add('flex');
+
+      pdfPageNum = 1;
+      showToast("PDF yuklanmoqda...");
+
+      pdfjsLib.getDocument(url).promise.then(function(doc) {
+        pdfDoc = doc;
+        pdfNumPages = doc.numPages;
+        renderPDFPage(pdfPageNum);
+      }).catch(function(err) {
+        console.warn("PDF loading error fallback:", err);
+        showToast("PDF ko'rsatishda muammo bo'ldi, qayta urinib ko'ring");
+      });
+    }
+
+    function renderPDFPage(num) {
+      if (!pdfDoc) return;
+      pdfPageRendering = true;
+
+      pdfDoc.getPage(num).then(function(page) {
+        const canvas = document.getElementById('pdf-render-canvas');
+        const ctx = canvas.getContext('2d');
+        const viewport = page.getViewport({ scale: 1.3 });
+
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+
+        const renderContext = {
+          canvasContext: ctx,
+          viewport: viewport
+        };
+
+        page.render(renderContext).promise.then(function() {
+          pdfPageRendering = false;
+          document.getElementById('pdf-page-num').textContent = `Sahifa: ${num} / ${pdfNumPages}`;
+        });
+      });
+    }
+
+    function prevPDFPage() {
+      if (pdfPageNum <= 1) return;
+      pdfPageNum--;
+      renderPDFPage(pdfPageNum);
+    }
+
+    function nextPDFPage() {
+      if (!pdfDoc || pdfPageNum >= pdfNumPages) return;
+      pdfPageNum++;
+      renderPDFPage(pdfPageNum);
+    }
+
+    function closePDFViewer() {
+      document.getElementById('pdf-modal').classList.add('hidden');
+      document.getElementById('pdf-modal').classList.remove('flex');
+    }
+
+    // --- 6. UTILITY FUNCTIONS (Sound, Toast, CV Download) ---
+    function playFlipSound() {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(150, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(40, ctx.currentTime + 0.15);
+        gain.gain.setValueAtTime(0.15, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.15);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.15);
+      } catch (e) {}
+    }
+
+    function downloadCV() {
+      const cvText = "Biosteenyc — Abdulhakim Xayitboyev\nSoftware Developer & Mobile Specialist\nPhone: +998 (33) 349-09-30\nTelegram: @Biosteenyc\nGitHub: github.com/biosteenyc";
+      const blob = new Blob([cvText], { type: 'text/plain' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = "Abdulhakim_Biosteenyc_CV.txt";
+      a.click();
+      showToast("CV yuklab olindi!");
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+      setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
