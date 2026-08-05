@@ -196,9 +196,10 @@
           <a href="https://youtube.com/@biosteenyc" target="_blank" rel="noopener" class="px-5 py-3 rounded-2xl bg-red-600 text-white font-semibold text-sm flex items-center gap-2 hover:bg-red-700 transition-colors">
             <i class="fa-brands fa-youtube text-lg"></i> YouTube
           </a>
-          <button onclick="downloadCV()" class="px-5 py-3 rounded-2xl bg-m3-primary text-white font-semibold text-sm flex items-center gap-2 hover:bg-teal-700 transition-colors">
-            <i class="fa-solid fa-file-arrow-down text-lg"></i> <span data-i18n="btn_cv">CV Yuklash</span>
-          </button>
+          </a>
+          <a href="https://raw.githubusercontent.com/biosteenyc/BIOSTEENYC.github.io/gh-pages/Abdulhakim%20Xayitboyev%20Rezume.pdf" target="_blank" rel="noopener" class="px-5 py-3 rounded-2xl bg-red-600 text-white font-semibold text-sm flex items-center gap-2 hover:bg-red-700 transition-colors">
+            <i class="fa-solid fa-file-cv"></i> CV-Yuklash
+          </a>
         </div>
       </div>
 
@@ -1928,13 +1929,6 @@
         osc.start();
         osc.stop(ctx.currentTime + 0.15);
       } catch (e) {}
-    }
-
-    function downloadCV() {
-      a.href = "https://raw.githubusercontent.com/biosteenyc/BIOSTEENYC.github.io/gh-pages/Amaliyothisoboti2025.pdf";
-      a.download = "Abdulhakim_Biosteenyc_CV.pdf";
-      a.click();
-      showToast("CV yuklab olindi!");
     }
 
     function showToast(msg) {
