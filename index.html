@@ -1931,11 +1931,8 @@
     }
 
     function downloadCV() {
-      const cvText = "Biosteenyc — Abdulhakim Xayitboyev\nSoftware Developer & Mobile Specialist\nPhone: +998 (33) 349-09-30\nTelegram: @Biosteenyc\nGitHub: github.com/biosteenyc";
-      const blob = new Blob([cvText], { type: 'text/plain' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = "Abdulhakim_Biosteenyc_CV.txt";
+      a.href = "https://raw.githubusercontent.com/biosteenyc/BIOSTEENYC.github.io/gh-pages/Amaliyothisoboti2025.pdf";
+      a.download = "Abdulhakim_Biosteenyc_CV.pdf";
       a.click();
       showToast("CV yuklab olindi!");
     }
