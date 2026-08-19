@@ -1,0 +1,17 @@
+name: ci
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node (for future checks)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Placeholder build step
+        run: |
+          echo "CI is configured. No build steps yet."
